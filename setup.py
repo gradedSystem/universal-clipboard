@@ -16,6 +16,13 @@ setup(
     extras_require={
         "windows": ["pywin32>=306"],
         "mac": ["pyobjc>=9.2"],
+        "dev": [
+            "pytest>=7.0.0",
+            "pytest-cov>=4.0.0",
+            "pytest-asyncio>=0.21.0",
+            "black>=23.0.0",
+            "flake8>=6.0.0",
+        ],
     },
     classifiers=[
         "Development Status :: 4 - Beta",

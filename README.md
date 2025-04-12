@@ -40,7 +40,7 @@ cross_clipboard/
 ## Installation
 
 ### Windows
-1. Download the latest release from the [Releases](https://github.com/yourusername/universal-clipboard/releases) page
+1. Download the latest release from the [Releases](https://github.com/gradedSystem/universal-clipboard/releases) page
 2. Run `install.bat` as Administrator
 3. The service will automatically start and run in the background
 
@@ -64,7 +64,7 @@ pip install universal-clipboard[mac]
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/universal-clipboard.git
+git clone https://github.com/gradedSystem/universal-clipboard.git
 cd universal-clipboard
 
 # Install development dependencies

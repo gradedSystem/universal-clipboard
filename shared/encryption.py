@@ -9,7 +9,11 @@ class EncryptionManager:
         if key is None:
             self.key = Fernet.generate_key()
         else:
-            self.key = key
+            # If key is already base64 encoded, decode it
+            if isinstance(key, str):
+                self.key = base64.urlsafe_b64decode(key)
+            else:
+                self.key = key
         self.fernet = Fernet(self.key)
 
     def encrypt(self, data: bytes) -> bytes:
