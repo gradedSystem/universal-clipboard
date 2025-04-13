@@ -55,9 +55,29 @@ jobs:
         cd windows_client
         python setup.py build
     
+    - name: Get version
+      id: get_version
+      run: |
+        echo "version=$(python -c "import setup; print(setup.setup()['version'])")" >> $GITHUB_OUTPUT
+    
+    - name: Create tag
+      uses: mathiasvr/command-output@v1
+      id: tag
+      with:
+        run: |
+          git tag -a "v${{ steps.get_version.outputs.version }}" -m "Release v${{ steps.get_version.outputs.version }}"
+          git push origin "v${{ steps.get_version.outputs.version }}"
+    
     - name: Create release
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: v${{ steps.get_version.outputs.version }}
+        name: Universal Clipboard v${{ steps.get_version.outputs.version }}
+        body: |
+          Windows executable for Universal Clipboard v${{ steps.get_version.outputs.version }}
+          
+          ## Changes
+          - Initial release
         files: windows_client/build/exe.win-amd64-3.11/UniversalClipboard.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
