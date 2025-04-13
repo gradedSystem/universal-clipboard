@@ -3,6 +3,9 @@ name: Build Release Assets
 on:
   release:
     types: [published]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build-windows:
@@ -27,7 +30,36 @@ jobs:
         cd windows_client
         python build.py
         
+    - name: Get version
+      id: get_version
+      run: |
+        $version = (Get-Content version.txt).Trim()
+        echo "version=$version" >> $env:GITHUB_OUTPUT
+    
+    - name: Configure Git
+      if: github.event_name == 'push'
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+    
+    - name: Create release
+      if: github.event_name == 'push'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ github.ref_name }}
+        name: Universal Clipboard ${{ github.ref_name }}
+        body: |
+          Windows executable for Universal Clipboard ${{ github.ref_name }}
+          
+          ## Changes
+          - Built with PyInstaller
+          - Includes all necessary dependencies
+        files: windows_client/dist/UniversalClipboard.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
     - name: Upload release asset
+      if: github.event_name == 'release'
       uses: softprops/action-gh-release@v1
       with:
         files: windows_client/dist/UniversalClipboard.exe
