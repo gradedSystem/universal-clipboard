@@ -81,7 +81,7 @@ jobs:
     - name: Get version
       id: get_version
       run: |
-        $version = Get-Content version.txt
+        $version = (Get-Content version.txt).Trim()
         echo "version=$version" >> $env:GITHUB_OUTPUT
     
     - name: Create tag
