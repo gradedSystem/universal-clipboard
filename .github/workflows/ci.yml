@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
     paths-ignore:
@@ -56,7 +57,7 @@ jobs:
   build-windows:
     needs: test
     runs-on: windows-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     
     steps:
     - uses: actions/checkout@v3
@@ -84,6 +85,7 @@ jobs:
         echo "version=$version" >> $env:GITHUB_OUTPUT
     
     - name: Create tag
+      if: github.event_name == 'push'
       uses: mathiasvr/command-output@v1
       id: tag
       with:
@@ -92,6 +94,7 @@ jobs:
           git push origin "v${{ steps.get_version.outputs.version }}"
     
     - name: Create release
+      if: github.event_name == 'push'
       uses: softprops/action-gh-release@v1
       with:
         tag_name: v${{ steps.get_version.outputs.version }}
