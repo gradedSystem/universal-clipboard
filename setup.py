@@ -9,13 +9,21 @@ with open("version.txt", "r", encoding="utf-8") as fh:
 setup(
     name="universal-clipboard",
     version=version,
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="gradedSystem",
+    author_email="homesiknessgerald@gmail.com",
     description="Cross-platform clipboard synchronization between Windows and Mac",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/universal-clipboard",
-    packages=find_packages(),
+    url="https://github.com/gradedSystem/universal-clipboard",
+    project_urls={
+        "Bug Tracker": "https://github.com/gradedSystem/universal-clipboard/issues",
+        "Documentation": "https://github.com/gradedSystem/universal-clipboard#readme",
+        "Source Code": "https://github.com/gradedSystem/universal-clipboard",
+    },
+    packages=find_packages(include=["universal_clipboard", "universal_clipboard.*"]),
+    package_data={
+        "universal_clipboard": ["py.typed"],
+    },
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: End Users/Desktop",
@@ -26,6 +34,9 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Topic :: Utilities",
+        "Typing :: Typed",
     ],
     python_requires=">=3.8",
     install_requires=[
@@ -42,6 +53,8 @@ setup(
             "pytest-asyncio>=0.21.0",
             "black>=23.0.0",
             "flake8>=6.0.0",
+            "mypy>=1.0.0",
+            "types-cryptography>=3.3.23",
         ],
     },
     entry_points={
@@ -49,4 +62,5 @@ setup(
             "universal-clipboard=universal_clipboard.cli:main",
         ],
     },
+    zip_safe=False,
 ) 
