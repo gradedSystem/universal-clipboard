@@ -3,8 +3,32 @@ name: CI
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - '.gitignore'
+      - '**/*.md'
+      - '**/*.txt'
+      - '**/*.yml'
+      - '**/*.yaml'
+      - '**/*.json'
+      - '**/*.log'
+      - '**/*.ini'
   pull_request:
     branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - '.gitignore'
+      - '**/*.md'
+      - '**/*.txt'
+      - '**/*.yml'
+      - '**/*.yaml'
+      - '**/*.json'
+      - '**/*.log'
+      - '**/*.ini'
 
 jobs:
   test:
@@ -58,7 +82,8 @@ jobs:
     - name: Get version
       id: get_version
       run: |
-        echo "version=$(python -c "import setup; print(setup.setup()['version'])")" >> $GITHUB_OUTPUT
+        $version = Get-Content version.txt
+        echo "version=$version" >> $env:GITHUB_OUTPUT
     
     - name: Create tag
       uses: mathiasvr/command-output@v1
